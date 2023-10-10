@@ -1,13 +1,41 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <title>Funcionários</title>
-    </head>
+{% extends "base.html" %}
+{% block title %}Funcionários{% endblock %}
+{% block content %}
+<form action="{{ url_for('funcionario.formFuncionario') }}" method="POST">
+    <h1>Funcionários</h1>
+    <button type="submit" name="formNovo">Novo Funcionário</button>
+</form>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Matrícula</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Grupo</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>John Doe</td>
+            <td>12345</td>
+            <td>123-456-7890</td>
+            <td>(123) 456-7890</td>
+            <td>Group A</td>
+            <td>
+                <button class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </td>
+        </tr>
+        <!-- Add more rows as needed -->
+    </tbody>
+</table>
 
-    <body>
-        <h1>Rota da página de Funcionários da WEB APP de Felipe Guimarães da Silva Cordova</h1>
-        <h1>Uso de render_template</h1>
-    </body>
-    
-</html>
+{% endblock %}

@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>HOME</title>
-</head>
+{% block title %}Home{% endblock %}
 
-<body>
-    <h1>HOME</h1>
-    <ul>
-        <li><a href="{{ url_for('index.formIndex') }}">Home</a></li>
-        <li><a href="{{ url_for('funcionario.formListaFuncionario') }}">Funcionário</a></li>
-        <li><a href="{{ url_for('cliente.formListaCliente') }}">Cliente</a></li>
-        <li><a href="{{ url_for('produto.formListaProduto') }}">Produto</a></li>
-    </ul>
-</body>
-
-</html>
+{% block content %}
+<h1>HOME</h1>
+{% endblock %}
