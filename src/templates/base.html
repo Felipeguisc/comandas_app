@@ -4,10 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} - AbcBolinhas</title>
+    <title>{% block title %}{% endblock %} - CommandasApp</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.2-dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-6.4.2-web/css/all.min.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -55,6 +58,7 @@
             flex-direction: row;
             align-items: center;
             margin-bottom: 15px;
+            justify-content: center;
         }
 
         .form-group label {
@@ -67,7 +71,7 @@
 
         .form-group input,
         .form-group select {
-            flex: 1;
+            width: 250px;
             padding: 5px;
         }
 
@@ -142,7 +146,7 @@
         <br><br><br>
     </div>
     <footer class="footer">
-        <a href="{{ url_for('index.formIndex') }}">&copy; 2023 by FGDesenvolvimentos</a>
+        <a href="{{ url_for('index.formIndex') }}">&copy; 2023 by FG Desenvolvimentos</a>
     </footer>
     <script src="{{ url_for('static', filename='bootstrap-5.3.2-dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='fontawesome-free-6.4.2-web/js/all.js') }}"></script>

@@ -1,9 +1,55 @@
 {% extends "base.html" %}
-
-{% block title %}Cliente{% endblock %}
-
+{% block title %}Clientes{% endblock %}
 {% block content %}
-
-<h1>Cliente</h1>
+<form action="{{ url_for('cliente.formCliente') }}" method="POST">
+    <h1>Clientes</h1>
+    <button type="submit" name="formNovo">Novo Cliente</button>
+</form>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Compra Fiado</th>
+            <th scope="col">Dia Fiado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>John Doe</td>
+            <td>123.456.789-80</td>
+            <td>(99) 99456-7890</td>
+            <td>Não</td>
+            <td>--</td>
+            <td>
+                <button class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+                <button class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Deletar
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">1</th>
+            <td>John Doe</td>
+            <td>123.456.789-80</td>
+            <td>(99) 99456-7890</td>
+            <td>Sim</td>
+            <td>09</td>
+            <td>
+                <button class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+                <button class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Deletar
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 {% endblock %}

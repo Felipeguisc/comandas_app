@@ -1,20 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Cadastrar novo Funcionário{% endblock %}
+{% block title %}Cadastrar novo Cliente{% endblock %}
 {% block content %}
 <form name="formAdicionar" id="formAdicionar" action="" method="POST">
-    <h1>Funcionário</h1>
+    <h1>Cliente</h1>
     <div class="form-group">
-        <label for="id">Código</label>
-        <input type="text" name="id" id="id" value="" placeholder="Código" readonly>
-    </div>
-    <div class="form-group">
-        <label for="nome">Nome Funcionário*</label>
-        <input type="text" name="nome" id="nome" value="" placeholder="Nome Funcionário" maxlength="100" autofocus
-            required>
-    </div>
-    <div class="form-group">
-        <label for="matricula">Matrícula</label>
-        <input type="text" name="matricula" id="matricula" value="" placeholder="Matrícula" maxlength="15">
+        <label for="nome">Nome*</label>
+        <input type="text" name="nome" id="nome" value="" placeholder="Nome" maxlength="100" autofocus required>
     </div>
     <div class="form-group">
         <label for="cpfInput">CPF*</label>
@@ -22,15 +13,18 @@
     </div>
     <div class="form-group">
         <label for="telefone">Telefone*</label>
-        <input type="tel" name="telefone" id="telefone" value="" placeholder="Telefone" maxlength="15" required>
+        <input type="tel" name="telefone" id="telefone" value="" placeholder="(XX) XXXX-XXXX" maxlength="15" required>
     </div>
     <div class="form-group">
-        <label for="grupo">Grupo*</label>
+        <label for="grupo">Compra fiado</label>
         <select name="grupo" id="grupo" aria-label="Grupo">
-            <option value="0">Atendente</option>
-            <option value="1">Caixa</option>
-            <option value="2">Adm</option>
+            <option value="0">Não</option>
+            <option value="1">Sim</option>
         </select>
+    </div>
+    <div class="form-group">
+        <label for="diaFiado">Dia fiado</label>
+        <input type="date" name="diaFiado" id="diaFiado" value="" placeholder="">
     </div>
     <div class="form-group">
         <label for="senha">Senha*</label>
@@ -45,7 +39,6 @@
                 class="fas fa-save"></i> Salvar</button>
     </div>
 </form>
-
 <script>
     // Get the input element
     const cpfInput = document.getElementById('cpfInput');
@@ -74,9 +67,9 @@
 
     $(document).ready(function () {
         // Apply the Inputmask with the Brazilian telephone mask
-        $('#telefone').mask('(99) 9999-9999Z', { translation: { 'Z': { pattern: /[0-9]/, optional: true } } });
+        $('#telefone').mask('(99) 9999-9999Z', {translation:  {'Z': {pattern: /[0-9]/, optional: true}}});
     });
-</script>
 
+</script>
 
 {% endblock %}
