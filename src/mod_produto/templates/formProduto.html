@@ -1,28 +1,42 @@
 {% extends "base.html" %}
 {% block title %}Cadastrar novo Produto{% endblock %}
 {% block content %}
-<form name="formAdicionar" id="formAdicionar" action="" method="POST">
+<form name="formAdicionar" action="{{ url_for('produto.insert') }}" method="POST" enctype="multipart/form-data">
     <h1>Produto</h1>
     <div class="form-group">
-        <label for="name">Nome*</label>
-        <input type="text" name="name" id="name" placeholder="Nome" maxlength="100" autofocus required>
+        <label for="nome">Nome*</label>
+        <input type="text" name="nome" id="nome" placeholder="Nome" maxlength="100" autofocus required>
     </div>
     <div class="form-group">
-        <label for="description">Descrição</label>
-        <input type="text" name="description" id="description" placeholder="Descrição" maxlength="200">
+        <label for="descricao">Descrição</label>
+        <input type="text" name="descricao" id="descricao" placeholder="Descrição" maxlength="200">
     </div>
     <div class="form-group">
-        <label for="value">Valor Unitário*</label>
-        <input type="text" name="value" id="value" placeholder="Valor" maxlength="15" required>
+        <label for="valorUnitario">Valor Unitário*</label>
+        <input type="text" name="valorUnitario" id="valorUnitario" placeholder="Valor" maxlength="15" required oninput="validateDecimal(this)">
     </div>
     <div class="form-group">
-        <label for="photo">Foto</label>
-        <input type="file" name="photo" id="photo" accept="image/*">
+        <label for="foto">Foto</label>
+        <input type="file" name="foto" id="foto" accept="image/*">
     </div>
     <div class="center-button">
         <button type="submit" name="salvaUsuarioDB" id="salvaUsuarioDB" class="btn btn-primary"><i
                 class="fas fa-save"></i> Salvar</button>
     </div>
 </form>
+
+<script>
+    function validateDecimal(input) {
+        // Use a regular expression to allow only decimal numbers
+        var decimalRegex = /^\d*\.?\d*$/;
+
+        // Check if the entered value matches the decimal pattern
+        if (!decimalRegex.test(input.value)) {
+            // If not, clear the input
+            input.value = "";
+            alert("Please enter a valid decimal number.");
+        }
+    }
+</script>
 
 {% endblock %}

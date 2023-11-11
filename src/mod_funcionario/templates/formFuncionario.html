@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Cadastrar novo Funcionário{% endblock %}
 {% block content %}
-<form name="formAdicionar" id="formAdicionar" action="" method="POST">
+<form name="formAdicionar" id="formAdicionar" action="{{ url_for('funcionario.insert') }}" method="POST">
     <h1>Funcionário</h1>
     <div class="form-group">
         <label for="id">Código</label>

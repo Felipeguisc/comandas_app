@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Cadastrar novo Cliente{% endblock %}
 {% block content %}
-<form name="formAdicionar" id="formAdicionar" action="" method="POST">
+<form name="formAdicionar" id="formAdicionar" action="{{ url_for('cliente.insert') }}" method="POST">
     <h1>Cliente</h1>
     <div class="form-group">
         <label for="nome">Nome*</label>
@@ -16,15 +16,22 @@
         <input type="tel" name="telefone" id="telefone" value="" placeholder="(XX) XXXX-XXXX" maxlength="15" required>
     </div>
     <div class="form-group">
-        <label for="grupo">Compra fiado</label>
-        <select name="grupo" id="grupo" aria-label="Grupo">
+        <label for="compraFiado">Compra fiado</label>
+        <select name="compraFiado" id="compraFiado" aria-label="Compra Fiado">
             <option value="0">Não</option>
             <option value="1">Sim</option>
         </select>
     </div>
     <div class="form-group">
         <label for="diaFiado">Dia fiado</label>
-        <input type="date" name="diaFiado" id="diaFiado" value="" placeholder="">
+        <select name="diaFiado" id="diaFiado" aria-label="Dia Fiado">
+            <option value="0">Segunda-feira</option>
+            <option value="1">Terça-feira</option>
+            <option value="2">Quarta-feira</option>
+            <option value="3">Quinta-feira</option>
+            <option value="4">Sexta-feira</option>
+            <option value="5">Sábado</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="senha">Senha*</label>

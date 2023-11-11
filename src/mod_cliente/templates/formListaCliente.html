@@ -17,13 +17,15 @@
         </tr>
     </thead>
     <tbody>
+        {% if result %}
+        {% for row in result %}
         <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>123.456.789-80</td>
-            <td>(99) 99456-7890</td>
-            <td>Não</td>
-            <td>--</td>
+            <th scope="row">{{ row['id'] }}</th>
+            <td>{{ row['nome'] }}</td>
+            <td>{{ row['cpf'] }}</td>
+            <td>{{ row['telefone'] }}</td>
+            <td>{{ row['compraFiado'] }}</td>
+            <td>{{ row['diaFiado']}}</td>
             <td>
                 <button class="btn btn-primary">
                     <i class="fas fa-edit"></i> Editar
@@ -33,22 +35,8 @@
                 </button>
             </td>
         </tr>
-        <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>123.456.789-80</td>
-            <td>(99) 99456-7890</td>
-            <td>Sim</td>
-            <td>09</td>
-            <td>
-                <button class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Editar
-                </button>
-                <button class="btn btn-danger">
-                    <i class="fas fa-trash"></i> Deletar
-                </button>
-            </td>
-        </tr>
+        {% endfor %}
+        {% endif %}
     </tbody>
 </table>
 
