@@ -51,3 +51,50 @@ def insert():
     
     except Exception as e:
         return redirect(url_for('funcionario.formListaFuncionario', msgErro=e.args[0]))
+    
+@bp_funcionario.route("/form-edit-funcionario", methods=['POST'])
+def formEditFuncionario():
+    try:
+        # ID enviado via FORM
+        id_funcionario = request.form['id']
+        # executa o verbo GET da API buscando somente o funcionário selecionado,
+        # obtendo o JSON do retorno
+        response = requests.get(ENDPOINT_FUNCIONARIO + id_funcionario, headers=HEADERS_API, verify=False)
+        print(response)
+        result = response.json()
+        print(result)
+        if (response.status_code != 200):
+            raise Exception(result[0])
+        # renderiza o form passando os dados retornados
+        return render_template('formFuncionario.html', result=result)
+    
+    except Exception as e:
+        print(e.args[0])
+        return render_template('formListaFuncionario.html', msgErro=e.args[0])
+    
+@bp_funcionario.route('/edit', methods=['POST'])
+def edit():
+    try:
+        # dados enviados via FORM
+        id_funcionario = request.form['id']
+        nome = request.form['nome']
+        matricula = request.form['matricula']
+        cpf = request.form['cpf']
+        telefone = request.form['telefone']
+        grupo = request.form['grupo']
+        senha = Funcoes.cifraSenha(request.form['senha'])
+        
+        # monta o JSON para envio a API
+        payload = {'id': id_funcionario, 'nome': nome, 'matricula': matricula, 'cpf': cpf, 'telefone': telefone, 'grupo':
+        grupo, 'senha': senha}
+        
+        # executa o verbo PUT da API e armazena seu retorno
+        response = requests.put(ENDPOINT_FUNCIONARIO, headers=HEADERS_API, json=payload, verify=False)
+        result = response.json()
+        
+        if (response.status_code != 200 or result[1] != 200):
+            raise Exception(result[0])
+        return redirect(url_for('funcionario.formListaFuncionario', msg=result[0]))
+    except Exception as e:
+        print(e.args[0])
+        return render_template('formListaFuncionario.html', msgErro=e.args[0])

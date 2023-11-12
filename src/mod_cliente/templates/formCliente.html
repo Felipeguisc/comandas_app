@@ -1,45 +1,60 @@
 {% extends "base.html" %}
-{% block title %}Cadastrar novo Cliente{% endblock %}
+{% block title %}Cliente{% endblock %}
+
+{# ajusta as variáveis conforme novo ou edit #}
+{% set id = result[0].id if result else '0' %}
+{% set nome = result[0].nome if result else '' %}
+{% set cpf = result[0].cpf if result else '' %}
+{% set telefone = result[0].telefone if result else '' %}
+{% set compraFiado = result[0].compraFiado if result else '' %}
+{% set diaFiado = result[0].diaFiado if result else '' %}
+{% set senha = result[0].senha if result else '' %}
+
 {% block content %}
-<form name="formAdicionar" id="formAdicionar" action="{{ url_for('cliente.insert') }}" method="POST">
-    <h1>Cliente</h1>
+<form name="{{ 'formEditar' if result else 'formAdicionar' }}" id="{{ 'formEditar' if result else 'formAdicionar' }}"
+    action="{{ url_for('cliente.edit') if result else url_for('cliente.insert') }}" method="POST">
+    <h1>Cliente - {{ "%s: %s" % ('Editar Registro', id) if result else 'Novo' }}</h1>
+    <div class="form-group">
+        <label for="id">ID</label>
+        <input type="text" name="id" id="id" value="{{ id }}" placeholder="ID" readonly>
+    </div>
     <div class="form-group">
         <label for="nome">Nome*</label>
-        <input type="text" name="nome" id="nome" value="" placeholder="Nome" maxlength="100" autofocus required>
+        <input type="text" name="nome" id="nome" value="{{ nome }}" placeholder="Nome" maxlength="100" autofocus required>
     </div>
     <div class="form-group">
         <label for="cpfInput">CPF*</label>
-        <input type="text" name="cpf" id="cpfInput" value="" placeholder="CPF" maxlength="15" required>
+        <input type="text" name="cpf" id="cpfInput" value="{{ cpf }}" placeholder="CPF" maxlength="15" required>
     </div>
     <div class="form-group">
         <label for="telefone">Telefone*</label>
-        <input type="tel" name="telefone" id="telefone" value="" placeholder="(XX) XXXX-XXXX" maxlength="15" required>
+        <input type="tel" name="telefone" id="telefone" value="{{ telefone }}" placeholder="(XX) XXXX-XXXX" maxlength="15" required>
     </div>
     <div class="form-group">
         <label for="compraFiado">Compra fiado</label>
         <select name="compraFiado" id="compraFiado" aria-label="Compra Fiado">
-            <option value="0">Não</option>
-            <option value="1">Sim</option>
+            <option value="0" {{ 'selected' if compraFiado==0 else '' }}>Não</option>
+            <option value="1" {{ 'selected' if compraFiado==1 else '' }}>Sim</option>
         </select>
     </div>
     <div class="form-group">
         <label for="diaFiado">Dia fiado</label>
         <select name="diaFiado" id="diaFiado" aria-label="Dia Fiado">
-            <option value="0">Segunda-feira</option>
-            <option value="1">Terça-feira</option>
-            <option value="2">Quarta-feira</option>
-            <option value="3">Quinta-feira</option>
-            <option value="4">Sexta-feira</option>
-            <option value="5">Sábado</option>
+            <option value="0" {{ 'selected' if diaFiado==0 else '' }}>Segunda-feira</option>
+            <option value="1" {{ 'selected' if diaFiado==1 else '' }}>Terça-feira</option>
+            <option value="2" {{ 'selected' if diaFiado==2 else '' }}>Quarta-feira</option>
+            <option value="3" {{ 'selected' if diaFiado==3 else '' }}>Quinta-feira</option>
+            <option value="4" {{ 'selected' if diaFiado==4 else '' }}>Sexta-feira</option>
+            <option value="5" {{ 'selected' if diaFiado==5 else '' }}>Sábado</option>
         </select>
     </div>
     <div class="form-group">
         <label for="senha">Senha*</label>
-        <input type="password" name="senha" id="senha" value="" placeholder="Senha" maxlength="25" required>
+        <input type="password" name="senha" id="senha" value="{{ senha }}" placeholder="Senha" maxlength="25" required>
     </div>
     <div class="form-group">
         <label for="resenha">Confirmar Senha*</label>
-        <input type="password" name="resenha" id="resenha" value="" placeholder="Confirmar senha" maxlength="25" required>
+        <input type="password" name="resenha" id="resenha" value="{{ senha }}" placeholder="Confirmar senha" maxlength="25" required>
     </div>
     <div class="center-button">
         <button type="submit" name="salvaUsuarioDB" id="salvaUsuarioDB" class="btn btn-primary"><i

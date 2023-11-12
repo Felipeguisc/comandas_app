@@ -28,12 +28,14 @@
             <td>{{ row['telefone']}}</td>
             <td>{{ row['grupo']}}</td>
             <td>
-                <button class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Editar
-                </button>
-                <button class="btn btn-danger">
-                    <i class="fas fa-trash"></i> Deletar
-                </button>
+                <form action="{{ url_for('funcionario.formEditFuncionario') }}" method="POST"
+                    name="formEdit{{ row['id'] }}">
+
+                    <input type="hidden" name="id" value="{{ row['id'] }}">
+                    <button class="btn btn-primary" type="submit" name="formEditFuncionario">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                </form>
             </td>
         </tr>
         {% endfor %}
