@@ -24,7 +24,15 @@
             <td>{{ row['nome'] }}</td>
             <td>{{ row['cpf'] }}</td>
             <td>{{ row['telefone'] }}</td>
-            <td>{{ row['compraFiado'] }}</td>
+            <td>
+                {% if row['compraFiado'] == 0 %}
+                {{ 'Não' }}
+                {% elif row['compraFiado'] == 1 %}
+                {{ 'Sim' }}
+                {% else %}
+                {{ 'Unknown' }}
+                {% endif %}
+            </td>
             <td>{{ row['diaFiado']}}</td>
             <td>
                 <form action="{{ url_for('cliente.formEditCliente') }}" method="POST"
