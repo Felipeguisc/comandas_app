@@ -3,5 +3,13 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>HOME</h1>
+
+{% if 'login' in session %}
+<div>
+    Bem-vindo <b>{{ session['login'] }}</b>
+</div>
+{% endif %}
+<div>
+    Acesse os seguintes links:
+</div>
 {% endblock %}
