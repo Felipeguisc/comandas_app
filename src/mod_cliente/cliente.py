@@ -2,10 +2,12 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 import requests
 from settings import HEADERS_API, ENDPOINT_CLIENTE
 from funcoes import Funcoes
+from mod_login. login import validaSessao
 
 bp_cliente = Blueprint('cliente', __name__, url_prefix="/cliente", template_folder='templates')
 
 @bp_cliente.route('/')
+@validaSessao
 def formListaCliente():
     try:
         response = requests.get(ENDPOINT_CLIENTE, headers=HEADERS_API, verify=False)

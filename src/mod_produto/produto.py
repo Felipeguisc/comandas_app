@@ -3,10 +3,12 @@ import requests
 from settings import HEADERS_API, ENDPOINT_PRODUTO
 import base64
 import re
+from mod_login. login import validaSessao
 
 bp_produto = Blueprint('produto', __name__, url_prefix="/produto", template_folder='templates')
 
 @bp_produto.route('/')
+@validaSessao
 def formListaProduto():
     try:
         response = requests.get(ENDPOINT_PRODUTO, headers=HEADERS_API, verify=False)

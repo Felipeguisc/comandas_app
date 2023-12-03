@@ -1,5 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from funcoes import Funcoes
+from functools import wraps
+import requests
+from settings import HEADERS_API, ENDPOINT_LOGIN
+import json
 
 bp_login = Blueprint('login', __name__, url_prefix='/', template_folder='templates')
 
@@ -11,15 +15,25 @@ def login():
 def validalogin():
     try:
         # dados enviados via FORM
-        cpf = request.form['usuario']
+        cpf = request.form['cpf']
         senha = Funcoes.cifraSenha(request.form['senha'])
-        
-        # limpa a sessão
-        # session.clear()
 
-        if (cpf == "abc" and senha == Funcoes.cifraSenha('Bolinhas')):
+        # monta o JSON para envio a API
+        payload = {'cpf': cpf, 'senha': senha}
+        
+        print(senha)
+
+        # executa o verbo POST da API e armazena seu retorno
+        response = requests.post(ENDPOINT_LOGIN, headers=HEADERS_API, json=payload, verify=False)
+        print(response.status_code)
+        
+        if (response.status_code == 200):
+            # Convert JSON to Python object
+            python_object = response.json()
+            
             # registra usuário na sessão, armazenando o login do usuário
-            session['login'] = cpf
+            session['login'] = python_object[0]
+            
             # abre a aplicação na tela home
             return redirect(url_for('index.formIndex'))
         else:
@@ -38,3 +52,16 @@ def logoff():
     session.clear()
     # retorna para a tela de login
     return redirect(url_for('login.login'))
+
+# valida se o usuário esta ativo na sessão
+def validaSessao(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'login' not in session:
+            # descarta os dados copiados da função original e retorna a tela de login
+            return redirect(url_for('login.login', msgErro='Usuário não logado!'))
+        else:
+            # retorna os dados copiados da função original
+            return f(*args, **kwargs)
+    # retorna o resultado do if acima
+    return decorated_function

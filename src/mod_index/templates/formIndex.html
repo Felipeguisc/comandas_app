@@ -6,10 +6,15 @@
 
 {% if 'login' in session %}
 <div>
-    Bem-vindo <b>{{ session['login'] }}</b>
+    Bem-vindo <b>{{ session['login']['nome'] }}</b>
 </div>
 {% endif %}
-<div>
-    Acesse os seguintes links:
+<div class="container mt-3">
+    <h4>Acesse os seguintes links:</h4>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="/funcionario">Página de Funcionário</a></li>
+        <li class="list-group-item"><a href="/cliente">Página de Cliente</a></li>
+        <li class="list-group-item"><a href="/produto">Página de Produto</a></li>
+    </ul>
 </div>
 {% endblock %}
