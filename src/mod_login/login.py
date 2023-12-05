@@ -59,8 +59,7 @@ def validaSessao(f):
     def decorated_function(*args, **kwargs):
         if 'login' not in session:
             # descarta os dados copiados da função original e retorna a tela de login
-            #return redirect(url_for('login.login', msgErro='Usuário não logado!'))
-            return f(*args, **kwargs)
+            return redirect(url_for('login.login', msgErro='Usuário não logado!'))
         else:
             # retorna os dados copiados da função original
             return f(*args, **kwargs)

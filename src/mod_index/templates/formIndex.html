@@ -6,7 +6,15 @@
 
 {% if 'login' in session %}
 <div>
-    Bem-vindo <b>{{ session['login']['nome'] }}</b>
+    Bem-vindo <b>{{ session['login']['nome'] }}, {% if session['login']['grupo'] == 0 %}
+        {{ 'Atendente' }}
+        {% elif session['login']['grupo'] == 1 %}
+        {{ 'Caixa' }}
+        {% elif session['login']['grupo'] == 2 %}
+        {{ 'Caixa' }}
+        {% else %}
+        {{ 'Unknown Role' }}
+        {% endif %}</b>
 </div>
 {% endif %}
 <div class="container mt-3">
