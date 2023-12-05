@@ -34,7 +34,7 @@
     <div class="form-group">
         <label for="foto">Foto</label>
     <input type="file" name="foto" id="foto" value="{{ foto }}" accept="image/*">
-    <img src="data:image;base64,{{ foto }}" alt="Thumbnail" height="50">
+    <img src="{{ foto }}" alt="Thumbnail" height="50">
     </div>
     <div class="center-button">
         <button type="submit" name="salvaUsuarioDB" id="salvaUsuarioDB" class="btn btn-primary"><i

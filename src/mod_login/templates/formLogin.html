@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block menu %}
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" href="#">
+    <h2>Comandas App</h2>
+</a>
+</nav>
+{% endblock %}
+
+{% block content %}
+<form action="{{ url_for('login.validalogin') }}" method="post">
+    <div class="form-group">
+        <label for="cpfInput">CPF</label>
+        <input type="text" name="cpf" id="cpfInput" value="{{ cpf }}" placeholder="CPF" maxlength="15" required>
+    </div>
+    <div class="form-group">
+        <label>Senha</label>
+        <input placeholder="Senha" name="senha" type="password">
+    </div>
+    <br>
+    <div class="center-button">
+        <input type="submit" value="Login" class="btn btn-primary">
+    </div>
+</form>
+
+<script>
+    // Get the input element
+    const cpfInput = document.getElementById('cpfInput');
+
+    // Add an input event listener to handle the mask
+    cpfInput.addEventListener('input', function () {
+        // Remove any non-digit characters
+        const cleanedValue = this.value.replace(/\D/g, '');
+
+        // Check if the cleaned value is empty or too long
+        if (cleanedValue.length === 0) {
+            this.value = ''; // Clear the input
+        } else if (cleanedValue.length <= 3) {
+            this.value = cleanedValue; // Maintain the first 3 digits
+        } else if (cleanedValue.length <= 6) {
+            // Apply the mask XXX.XXX
+            this.value = `${cleanedValue.slice(0, 3)}.${cleanedValue.slice(3)}`;
+        } else if (cleanedValue.length <= 9) {
+            // Apply the mask XXX.XXX.XXX
+            this.value = `${cleanedValue.slice(0, 3)}.${cleanedValue.slice(3, 6)}.${cleanedValue.slice(6)}`;
+        } else {
+            // Apply the mask XXX.XXX.XXX-XX
+            this.value = `${cleanedValue.slice(0, 3)}.${cleanedValue.slice(3, 6)}.${cleanedValue.slice(6, 9)}-${cleanedValue.slice(9, 11)}`;
+        }
+    });
+
+    $(document).ready(function () {
+        // Apply the Inputmask with the Brazilian telephone mask
+        $('#telefone').mask('(99) 9999-9999Z', { translation: { 'Z': { pattern: /[0-9]/, optional: true } } });
+    });
+</script>
+
+{% endblock %}

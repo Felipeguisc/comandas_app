@@ -1,11 +1,13 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, send_file
 import requests
 from settings import HEADERS_API, ENDPOINT_FUNCIONARIO
 from funcoes import Funcoes
+from mod_login. login import validaSessao
 
 bp_funcionario = Blueprint('funcionario', __name__, url_prefix="/funcionario", template_folder='templates')
 
 @bp_funcionario.route('/', methods=['GET', 'POST'])
+@validaSessao
 def formListaFuncionario():
     try:
         response = requests.get(ENDPOINT_FUNCIONARIO, headers=HEADERS_API, verify=False)
@@ -108,7 +110,6 @@ def delete():
         id_funcionario = request.form['id_funcionario']
         
         payload = {'id': id_funcionario }
-        print(id_funcionario)
         
         # executa o verbo DELETE da API e armazena seu retorno
         response = requests.delete(ENDPOINT_FUNCIONARIO + id_funcionario, headers=HEADERS_API, json=payload, verify=False)
@@ -121,3 +122,13 @@ def delete():
     except Exception as e:
         # return render_template('formListaFuncionario.html',
         return jsonify(erro=True, msgErro=e.args[0])
+    
+from mod_funcionario.GeraPdf import PDF
+    
+@bp_funcionario.route('/pdfTodos', methods=['POST'])
+@validaSessao
+def pdfTodos():
+    print("PDF Funcionario")
+    geraPdf = PDF()
+    geraPdf.listaTodos()
+    return send_file('../pdfFuncionario.pdf')

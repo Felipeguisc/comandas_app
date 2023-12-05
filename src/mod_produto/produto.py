@@ -1,12 +1,15 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, send_file
 import requests
 from settings import HEADERS_API, ENDPOINT_PRODUTO
 import base64
 import re
+from mod_login. login import validaSessao
+import json
 
 bp_produto = Blueprint('produto', __name__, url_prefix="/produto", template_folder='templates')
 
 @bp_produto.route('/')
+@validaSessao
 def formListaProduto():
     try:
         response = requests.get(ENDPOINT_PRODUTO, headers=HEADERS_API, verify=False)
@@ -34,6 +37,15 @@ def insert():
         
         # converte a foto em base64
         foto = str(base64.b64encode(request.files['foto'].read()), "utf-8")
+        #foto = "data:" + request.files['foto'].content_type + ";base64," + str(base64.b64encode(request.files['foto'].read()), "utf-8")
+        # Assuming 'foto' is a base64-encoded string
+        #foto_base64 = "data:" + request.files['foto'].content_type + ";base64," + str(base64.b64encode(request.files['foto'].read()), "utf-8")
+
+        # Convert base64 to bytes
+        #foto_bytes = base64.b64decode(foto_base64)
+        
+        # Convert bytes to base64 string (this is what you'll send in your JSON payload)
+        #foto_base64_for_json = base64.b64encode(foto_bytes).decode("utf-8")
 
         # monta o JSON para envio a API
         payload = {'id' : 0, 
@@ -42,9 +54,13 @@ def insert():
                    'descricao': descricao,
                    'foto': foto}
         
+        # Convert payload to JSON
+        #json_payload = json.dumps(payload)
+        
         # executa o verbo POST da API e armazena seu retorno
         response = requests.post(ENDPOINT_PRODUTO, headers=HEADERS_API, json=payload, verify=False)
         result = response.json()
+        print(result)
         
         if (response.status_code != 200 or result[1] != 200):
             raise Exception(result[0])
@@ -90,7 +106,8 @@ def edit():
         
         # converte a foto em base64
         foto = str(base64.b64encode(request.files['foto'].read()), "utf-8")
-        
+        #foto = "data:" + request.files['foto'].content_type + ";base64," + str(base64.b64encode(request.files['foto'].read()), "utf-8")
+
         # monta o JSON para envio a API
         payload = {'id': id_produto, 'nome': nome, 'descricao': descricao, 'foto': foto, 'valorUnitario': valorUnitario}
         
@@ -133,3 +150,12 @@ def delete():
     except Exception as e:
         # return render_template('formListaProduto.html', msgErro=e.args[0])
         return jsonify(erro=True, msgErro=e.args[0])
+    
+from mod_produto.GeraPdf import PDF
+
+@bp_produto.route('/pdfTodos', methods=['POST'])
+@validaSessao
+def pdfTodos():
+    geraPdf = PDF()
+    geraPdf.listaTodos()
+    return send_file('../pdfProdutos.pdf')
